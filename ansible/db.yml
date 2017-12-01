@@ -1,0 +1,13 @@
+---
+- hosts: db
+  become: true
+  vars:
+    mariadb_bind_address: '0.0.0.0'
+    mariadb_root_password: 'peenei3Xaevoo4ph'
+    mariadb_databases:
+      - name: demo
+    mariadb_users:
+      - name: ansible
+        password: 'Ansible1'
+        priv: "demo.*:ALL,GRANT"
+        host: "%"
