@@ -1,0 +1,16 @@
+---
+- include_vars: authorized_keys.yml
+
+# tasks file for init
+
+- name: Create .ssh directory
+  file:
+    path: /home/ansible/.ssh
+    state: directory
+    mode: 0700
+
+- name: Add public key (to access using private key)
+  copy:
+    content: "{{ authorized_key }}"
+    dest: /home/ansible/.ssh/authorized_keys
+    mode: 0600
