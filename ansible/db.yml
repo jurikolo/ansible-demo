@@ -11,3 +11,6 @@
         password: 'Ansible1'
         priv: "demo.*:ALL,GRANT"
         host: "%"
+
+  roles:
+    - mariadb
