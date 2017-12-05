@@ -2,7 +2,7 @@
 ---
 
 - name: check if firewalld is installed
-  command: shell -q firewalld
+  command: rpm -q firewalld
   args:
     warn: no
   register: rpm_check
