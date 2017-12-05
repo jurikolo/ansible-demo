@@ -1,0 +1,4 @@
+#!/bin/bash
+export WILDFLY_HOME={{ wildfly_home }}
+nohup /home/ansible/wildfly-11.0.0.Final/bin/standalone.sh -b {{ ansible_enp0s8.ipv4.address }} -bmanagement {{ ansible_enp0s8.ipv4.address }} -Dserver.mode=server --debug &
+#nohup /home/ansible/wildfly-11.0.0.Final/bin/standalone.sh -b {{ ansible_enp0s8.ipv4.address }} -bmanagement {{ ansible_enp0s8.ipv4.address }} -Dserver.mode=server --server-config={{ wildfly_config_file }} -Djboss.server.config.dir={{ wildfly_config_dir }} --debug &

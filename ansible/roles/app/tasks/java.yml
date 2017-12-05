@@ -1,0 +1,7 @@
+# roles/mariadb/tasks/java.yml
+---
+
+- name: install the latest version of open jdk
+  yum:
+    name: java
+    state: latest

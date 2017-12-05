@@ -1,0 +1,83 @@
+---
+# tasks file for app
+- name: Register wildfly directory
+  stat:
+    path: "{{ wildfly_home }}"
+  register: wildfly_home
+
+- name: Download and extract Wildfly archive
+  unarchive:
+    src: http://download.jboss.org/wildfly/11.0.0.Final/wildfly-11.0.0.Final.tar.gz
+    dest: /home/ansible
+    remote_src: yes
+    owner: ansible
+    group: ansible
+  when: wildfly_home.stat.exists == False
+
+- template:
+    src: wildfly.j2
+    dest: /home/ansible/wildfly.sh
+    owner: ansible
+    group: ansible
+    mode: 0744
+
+#- name: Add JBOSS_HOME env variable
+#  lineinfile:
+#    path: /home/ansible/.bash_profile
+#    line: 'export JBOSS_HOME={{ wildfly_home }}'
+#    insertafter: "^export PATH"
+
+- include_tasks: java.yml
+- include_tasks: firewall.yml
+
+- name: Check if Wildfly process is running
+  shell: ps aux | grep java | grep wildfly | grep -v grep
+  ignore_errors: yes
+  changed_when: false
+  register: service_wildfly_status
+
+- name: Undeploy mobsoap application
+  jboss:
+    deploy_path: "{{ deployments_dir }}"
+    deployment: "{{ package_name }}"
+    state: absent
+  when: "service_wildfly_status.stdout.find('wildfly') > -1"
+
+- name: Shut down wildfly
+  command: "{{ jboss_cli }} --connect --controller={{ ansible_enp0s8.ipv4.address }}:9990 command=:shutdown"
+  when: "service_wildfly_status.stdout.find('wildfly') > -1"
+
+- name: Pause execution due to Wildfly is shutting down
+  pause:
+    minutes: 1
+  when: "service_wildfly_status.stdout.find('wildfly') > -1"
+
+- name: Remove deployments directory
+  file:
+    state: absent
+    path: "{{ deployments_dir }}"
+
+- name: Revert deployments directory
+  file:
+    state: directory
+    path: "{{ deployments_dir }}"
+
+#- name: Deploy artifact
+#  maven_artifact:
+#    group_id: com.tele2.cn.t2prov.projects.t2prov-mobsoap
+#    artifact_id: mobsoap-web
+#    extension: war
+#    repository_url: 'http://captools2.tele2.net:8081/nexus/content/repositories/snapshots'
+#    dest: "{{ package }}"
+
+- name: Deploy artifact
+  copy:
+    src: "{{ role_path }}/files/jboss-hibernate.war"
+    dest: "{{ deployments_dir }}"
+
+- name: Startup wildfly
+  command: /home/ansible/wildfly.sh
+  args:
+    chdir: /home/ansible
+  become: yes
+  become_user: ansible

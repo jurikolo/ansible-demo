@@ -1,0 +1,9 @@
+---
+# vars file for app
+wildfly_home: /home/ansible/wildfly-11.0.0.Final
+jboss_cli: /home/ansible/wildfly-11.0.0.Final/bin/jboss-cli.sh
+deployments_dir: /home/ansible/wildfly-11.0.0.Final/standalone/deployments
+package_name: jboss-hibernate.war
+
+wildfly_config_file: DUMMY
+wildfly_config_dir: DUMMY
