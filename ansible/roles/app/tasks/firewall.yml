@@ -22,8 +22,14 @@
     state: enabled
   when: rpm_check.stdout != "package firewalld is not installed"
 
-- name: restart firewalld
-  service:
+- name: reload firewalld
+  systemd:
     name: firewalld
-    state: restarted
+    state: reloaded
   when: rpm_check.stdout != "package firewalld is not installed"
+
+#- name: disable firewalld
+#  systemd:
+#    name: firewalld
+#    state: stopped
+#  when: rpm_check.stdout != "package firewalld is not installed"

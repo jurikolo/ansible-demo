@@ -1,5 +1,10 @@
 ---
 # tasks file for app
+- name: Create app directory
+  file:
+    state: directory
+    path: "{{ app_dir }}"
+    
 - name: Register wildfly directory
   stat:
     path: "{{ wildfly_home }}"
@@ -8,22 +13,18 @@
 - name: Download and extract Wildfly archive
   unarchive:
     src: http://download.jboss.org/wildfly/11.0.0.Final/wildfly-11.0.0.Final.tar.gz
-    dest: /home/ansible
+    dest: /app
     remote_src: yes
-    owner: ansible
-    group: ansible
   when: wildfly_home.stat.exists == False
 
 - template:
     src: wildfly.j2
-    dest: /home/ansible/wildfly.sh
-    owner: ansible
-    group: ansible
+    dest: /app/wildfly.sh
     mode: 0744
 
 #- name: Add JBOSS_HOME env variable
 #  lineinfile:
-#    path: /home/ansible/.bash_profile
+#    path: /app/.bash_profile
 #    line: 'export JBOSS_HOME={{ wildfly_home }}'
 #    insertafter: "^export PATH"
 
@@ -36,7 +37,7 @@
   changed_when: false
   register: service_wildfly_status
 
-- name: Undeploy mobsoap application
+- name: Undeploy application
   jboss:
     deploy_path: "{{ deployments_dir }}"
     deployment: "{{ package_name }}"
@@ -44,7 +45,7 @@
   when: "service_wildfly_status.stdout.find('wildfly') > -1"
 
 - name: Shut down wildfly
-  command: "{{ jboss_cli }} --connect --controller={{ ansible_enp0s8.ipv4.address }}:9990 command=:shutdown"
+  command: "{{ jboss_cli }} --connect --controller={{ ansible_eth0.ipv4.address }}:9990 command=:shutdown"
   when: "service_wildfly_status.stdout.find('wildfly') > -1"
 
 - name: Pause execution due to Wildfly is shutting down
@@ -76,8 +77,6 @@
     dest: "{{ deployments_dir }}"
 
 - name: Startup wildfly
-  command: /home/ansible/wildfly.sh
+  command: /app/wildfly.sh
   args:
-    chdir: /home/ansible
-  become: yes
-  become_user: ansible
+    chdir: /app
