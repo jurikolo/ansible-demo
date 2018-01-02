@@ -3,7 +3,7 @@
 wildfly_home: /app/wildfly-11.0.0.Final
 jboss_cli: /app/wildfly-11.0.0.Final/bin/jboss-cli.sh
 deployments_dir: /app/wildfly-11.0.0.Final/standalone/deployments
-package_name: jboss-hibernate.war
+package_name: testSevlet-1.0.0.war
 app_dir: /app
 
 wildfly_config_file: DUMMY

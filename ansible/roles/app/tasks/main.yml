@@ -22,12 +22,6 @@
     dest: /app/wildfly.sh
     mode: 0744
 
-#- name: Add JBOSS_HOME env variable
-#  lineinfile:
-#    path: /app/.bash_profile
-#    line: 'export JBOSS_HOME={{ wildfly_home }}'
-#    insertafter: "^export PATH"
-
 - include_tasks: java.yml
 - include_tasks: firewall.yml
 
@@ -68,12 +62,12 @@
 #    group_id: com.tele2.cn.t2prov.projects.t2prov-mobsoap
 #    artifact_id: mobsoap-web
 #    extension: war
-#    repository_url: 'http://captools2.tele2.net:8081/nexus/content/repositories/snapshots'
+#    repository_url: 'http://nexus.tele2.net:8081/nexus/content/repositories/snapshots'
 #    dest: "{{ package }}"
 
 - name: Deploy artifact
   copy:
-    src: "{{ role_path }}/files/jboss-hibernate.war"
+    src: "{{ role_path }}/files/testSevlet-1.0.0.war"
     dest: "{{ deployments_dir }}"
 
 - name: Startup wildfly
