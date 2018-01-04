@@ -11,7 +11,7 @@ target/
 # some non-source directories and files
 *.log
 
+# ansible specific
+hosts
 .vault_pass
 *.retry
-
-hosts
