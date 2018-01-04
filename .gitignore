@@ -13,3 +13,5 @@ target/
 
 .vault_pass
 *.retry
+
+ansible/hosts
