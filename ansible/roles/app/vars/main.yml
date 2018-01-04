@@ -3,8 +3,14 @@
 wildfly_home: /app/wildfly-11.0.0.Final
 jboss_cli: /app/wildfly-11.0.0.Final/bin/jboss-cli.sh
 deployments_dir: /app/wildfly-11.0.0.Final/standalone/deployments
+configuration_file: /app/wildfly-11.0.0.Final/standalone/configuration/standalone.xml
 package_name: testSevlet-1.0.0.war
 app_dir: /app
+db_host: 127.0.0.1
+db_schema: demo
+db_username: ansible
+db_password: Ansible1
+db_module_dir: /app/wildfly-11.0.0.Final/modules/system/layers/base/com/mysql/driver/main
 
 wildfly_config_file: DUMMY
 wildfly_config_dir: DUMMY

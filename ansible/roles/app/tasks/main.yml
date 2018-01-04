@@ -17,10 +17,33 @@
     remote_src: yes
   when: wildfly_home.stat.exists == False
 
-- template:
+- name: Prepare Wildfly configuration file
+  template:
+    src: standalone.j2
+    dest: "{{ configuration_file }}"
+    force: yes
+    mode: 0644
+
+- name: Setup startup script
+  template:
     src: wildfly.j2
     dest: /app/wildfly.sh
     mode: 0744
+
+- name: Create MySQL module directory
+  file:
+    state: directory
+    path: "{{ db_module_dir }}"
+
+- name: Copy MySQL module jar
+  copy:
+    src: "{{ role_path }}/files/mysql-connector-java-5.1.45-bin.jar"
+    dest: "{{ db_module_dir }}"
+
+- name: Copy MySQL module xml
+  copy:
+    src: "{{ role_path }}/files/module.xml"
+    dest: "{{ db_module_dir }}"
 
 - include_tasks: java.yml
 - include_tasks: firewall.yml
@@ -67,7 +90,7 @@
 
 - name: Deploy artifact
   copy:
-    src: "{{ role_path }}/files/testSevlet-1.0.0.war"
+    src: "{{ role_path }}/files/testServlet-1.0.0.war"
     dest: "{{ deployments_dir }}"
 
 - name: Startup wildfly
