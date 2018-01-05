@@ -141,7 +141,7 @@
         <subsystem xmlns="urn:jboss:domain:datasources:5.0">
             <datasources>
                 <datasource jndi-name="java:/jdbc/mysqlds" pool-name="mysqlds" enabled="true" use-java-context="true">
-                    <connection-url>jdbc:mysql://{{ db_host }}/{{ db_schema }}</connection-url>
+                    <connection-url>jdbc:mysql://{{ db_host }}:{{ db_port }}/{{ db_schema }}</connection-url>
                     <driver>mysql</driver>
                     <security>
                         <user-name>{{ db_username }}</user-name>

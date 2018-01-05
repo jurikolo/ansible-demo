@@ -1,0 +1,72 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ora="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet logicalFilePath="init.xml" id="app.init-1" author="jurikolo">
+        <preConditions onError="MARK_RAN" onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="months"/>
+            </not>
+        </preConditions>
+        <createTable tableName="months">
+            <column name="id" type="varchar(200)" defaultValueComputed="UUID()" />
+            <column name="name" type="varchar(10)"/>
+        </createTable>
+        <addPrimaryKey tableName="months" columnNames="id" />
+    </changeSet>
+
+    <changeSet logicalFilePath="init.xml" id="app.init-2" author="jurikolo">
+
+        <insert tableName="months">
+            <column name="name">January</column>
+        </insert>
+
+        <insert tableName="months">
+            <column name="name">February</column>
+        </insert>
+
+        <insert tableName="months">
+            <column name="name">March</column>
+        </insert>
+
+        <insert tableName="months">
+            <column name="name">April</column>
+        </insert>
+
+        <insert tableName="months">
+            <column name="name">May</column>
+        </insert>
+
+        <insert tableName="months">
+            <column name="name">June</column>
+        </insert>
+
+        <insert tableName="months">
+            <column name="name">July</column>
+        </insert>
+
+        <insert tableName="months">
+            <column name="name">August</column>
+        </insert>
+
+        <insert tableName="months">
+            <column name="name">September</column>
+        </insert>
+
+        <insert tableName="months">
+            <column name="name">October</column>
+        </insert>
+
+        <insert tableName="months">
+            <column name="name">November</column>
+        </insert>
+
+        <insert tableName="months">
+            <column name="name">December</column>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

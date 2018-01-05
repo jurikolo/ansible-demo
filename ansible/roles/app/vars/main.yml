@@ -6,7 +6,8 @@ deployments_dir: /app/wildfly-11.0.0.Final/standalone/deployments
 configuration_file: /app/wildfly-11.0.0.Final/standalone/configuration/standalone.xml
 package_name: testSevlet-1.0.0.war
 app_dir: /app
-db_host: 127.0.0.1
+db_host: 95.213.236.73
+db_port: 3306
 db_schema: demo
 db_username: ansible
 db_password: Ansible1

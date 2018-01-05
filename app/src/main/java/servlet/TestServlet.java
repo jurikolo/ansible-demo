@@ -29,7 +29,7 @@ public class TestServlet extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet at " + request.getContextPath() + "</h1>");
-            out.println("<h2>Превед, сервлед!</h2>");
+            out.println("<h2>Превед, сервлед v1!</h2>");
             out.println("</body>");
             out.println("</html>");
         } finally {
