@@ -10,7 +10,7 @@ public class MonthsDao {
     @PersistenceContext(unitName = "servlet")
     private EntityManager em;
 
-    public List<Months> findAllMonths() {
-        return em.createNamedQuery("findAllMonths", Months.class).getResultList();
+    public List<String> findAllMonths() {
+        return em.createNamedQuery("findAllMonths", String.class).getResultList();
     }
 }

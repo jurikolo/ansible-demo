@@ -1,7 +1,6 @@
 package servlet;
 
 import dao.MonthsDao;
-import model.Months;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -39,9 +38,9 @@ public class TestServlet extends HttpServlet {
             out.println("<h1>Servlet at " + request.getContextPath() + "</h1>");
             out.println("<h2>Превед, сервлед v1!</h2>");
             //TODO: print out months
-            List<Months> allMonths = monthsDao.findAllMonths();
-            for (Months month : allMonths) {
-                out.println("<p>Month: " + month.getName() + "</p>");
+            List<String> allMonths = monthsDao.findAllMonths();
+            for (String month : allMonths) {
+                out.println("<p>Month: " + month + "</p>");
             }
             out.println("</body>");
             out.println("</html>");
